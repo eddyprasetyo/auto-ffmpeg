@@ -25,6 +25,10 @@ while(42)
 	$id_job=$ambil['ID_JOB'];
 	if ($id_program && $id_job)
 	{
+		foreach( glob('*.MXF') as $file )
+		{
+			unlink($file);
+		}
 		$progress_name=array();
 		$number_progress=array();
 		$step=0;
@@ -122,36 +126,7 @@ while(42)
 			$number_progress[$step]="0 %";
 			mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
 			Write2LogSql($WorkerID,$konek,"$id_program ambil segment");
-			/* This is old segmentation technique fetch from isilon
-			$session_ftp_get_segment = ftp_connect($ftp_server_segment);
-			$login_result = ftp_login($session_ftp_get_segment, $ftp_user_segment, $ftp_pass_segment);
-				if ((!$session_ftp_get_segment) || (!$login_result))
-			{ 
-				$info="gagal konek ke server segmentasi untuk $id_program dengan job $id_job";
-				mysql_query("CALL JOB_ERROR('$id_program','$id_job','$info')",$konek);
-				goto selesai2;
-			}
-			$ukuran=ftp_size($session_ftp_get_segment,"$ftp_folder_segment/$id_program.txt");
-			if($ukuran>0)
-			{
-				if(file_exists($segmentation_file))unlink($segmentation_file);
-				ftp_get($session_ftp_get_segment,$segmentation_file,"$ftp_folder_segment/$id_program.txt",FTP_BINARY);
-				echo"ambil segment sukses\n";
-				ftp_close($session_ftp_get_segment);
-			}
-			else
-			{
-				$info="File segmentasi tidak ada";
-				mysql_query("CALL JOB_ERROR('$id_program','$id_job','$info');",$konek);
-				ftp_selesai2($session_ftp_get_segment);
-				echo"ambil segment gagal\n";
-				goto selesai2;
-			}
-			$handler=fopen($segmentation_file, "r");
-			$baris=fgets($handler);
-			fclose($handler);
-			unlink($segmentation_file);
-			*/
+
 			$baris=file_get_contents("http://toa.nettv.co.id/parsing/tes-segmen2.php?id=$id_program");
 			if(!$baris)
 			{
