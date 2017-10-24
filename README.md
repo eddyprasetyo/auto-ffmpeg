@@ -13,9 +13,12 @@ Clearly, you need a php binnary with mysql (and some msssql) support. The test h
 In case of *nix, you need to change source and destionation. And windows, use map drive. On linux, use mounted folder.
 First setup will be preparing DB.
 
-### Contribution guidelines ###
+### Todo : ###
 
-nikooo, where are you.
+1. Store all parameter (exept db) into db
+2. Make parameter editable through web client
+3. Make a customized segmen
+4. Make a choice for user to choose which segmen to use (invenio,bms,or custom)
 
 ### Who do I talk to? ###
 
