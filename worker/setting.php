@@ -2,7 +2,7 @@
 $WorkerID=3;
 
 //source of ftp transfer
-$ftp_server_mediabase="172.16.113.19";
+$ftp_server_mediabase="172.16.113.20";
 $ftp_user_mediabase="anonymous";
 $ftp_pass_mediabase="anonymous";
 
