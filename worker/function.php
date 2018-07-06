@@ -53,7 +53,7 @@ function Write2Log($message)
 function Write2LogSql($WorkerID,$MySqlResource,$message)
 {
     $logfile="worker.log";
-    $jam=date("H:i:s");
+    $jam=date("Y-m-d H:i:s");
 	file_put_contents($logfile,"$jam - $message\r\n",FILE_APPEND | LOCK_EX);
 	mysql_query("CALL INSERT_WORKER_LOG('$WorkerID','$message');",$MySqlResource);
 	echo"$jam - $message\n";
@@ -132,4 +132,12 @@ fclose($fp);
 
 }
 
+
+function formatBytes($size, $precision = 2)
+{
+    $base = log($size, 1024);
+    $suffixes = array('B', 'KB', 'MB', 'GB', 'TB');   
+
+    return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+}
 ?>

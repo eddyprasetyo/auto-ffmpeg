@@ -25,7 +25,7 @@ while(42)
 	$id_job=$ambil['ID_JOB'];
 	if ($id_program && $id_job)
 	{
-		foreach( glob('*.MXF') as $file )
+		foreach( glob('*.[Mm][XxPp][4Ff]') as $file )
 		{
 			unlink($file);
 		}
@@ -65,8 +65,9 @@ while(42)
 			Write2LogSql($WorkerID,$konek,"$id_program sukses konek ke ftp youtube");
 			
 			//$size_src=ftp_size($session_fxp_src,"$id_program");
-			$size_src=intval(file_get_contents("http://toa.nettv.co.id/parsing/tes-size-newsan.php?id=$id_program"))*1024;
-			Write2LogSql($WorkerID,$konek,"$id_program ukuran di newsan $size_src");
+			$size_src=file_get_contents("http://toa.nettv.co.id/parsing/tes-size-newsan.php?id=$id_program");
+			$human_size_src=formatBytes($size_src);
+			Write2LogSql($WorkerID,$konek,"$id_program ukuran di newsan $human_size_src");
 			//ftp_raw($session_fxp_dst,"CWD /$dest_folder");
 			ftp_raw($session_fxp_dst,"TYPE I");
 			ftp_raw($session_fxp_src,"TYPE A");
@@ -89,11 +90,14 @@ while(42)
 				{ 
 					goto lanjut;
 				}
-				$size_dst=ftp_size($session_fxp_dst_cek,"$id_program.MXF");
+				$responftp=ftp_raw($session_fxp_dst_cek,"SIZE $id_program.MXF");
+				$size_dst=floatval(str_replace('213 ', '', $responftp[0]));
+				//$size_dst=ftp_size($session_fxp_dst_cek,"$id_program.MXF");
+				$human_size_dst=formatBytes($size_dst);
 				$progress=round(100*($size_dst / $size_src));
 				$number_progress[$step]="$progress %";
 				mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
-				Write2LogSql($WorkerID,$konek,"$id_program transfer dari mediabase $number_progress[$step]");
+				Write2LogSql($WorkerID,$konek,"$id_program transfer dari mediabase $progress % $human_size_dst of $human_size_src");
 				lanjut:
 				ftp_close($session_fxp_dst_cek);
 				$j++;
