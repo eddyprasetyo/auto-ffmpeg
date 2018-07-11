@@ -1,6 +1,6 @@
-# README #
+# OTT Transcoder #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is remodeled for old transcoder back in 2015, where we need to transcode 1000 high res clip in just one week.
 
 ### What is this repository for? ###
 
