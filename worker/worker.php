@@ -80,10 +80,11 @@ while(42)
 			
 			sleep(1);
 			$j=0;
+			$size_before=0;
 			$responmgx=substr(ftp_raw($session_fxp_src,"NOOP")[0],0,52);
 			while($responmgx=="550 Requested action not taken. Transfer in progress")
 			{
-			   sleep(1);
+			    sleep(1);
 				$session_fxp_dst_cek = ftp_connect($ftp_server_youtube);
 				$login_result = ftp_login($session_fxp_dst_cek, $ftp_user_youtube_ro, $ftp_pass_youtube_ro);
 				if ((!$session_fxp_dst_cek) || (!$login_result))
@@ -95,9 +96,12 @@ while(42)
 				//$size_dst=ftp_size($session_fxp_dst_cek,"$id_program.MXF");
 				$human_size_dst=formatBytes($size_dst);
 				$progress=round(100*($size_dst / $size_src));
+				$progress_speed=$size_dst-$size_before;
+				$human_progress_speed=formatBytes($progress_speed);
 				$number_progress[$step]="$progress %";
 				mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
-				Write2LogSql($WorkerID,$konek,"$id_program transfer dari mediabase $progress % $human_size_dst of $human_size_src");
+				Write2LogSql($WorkerID,$konek,"$id_program transfer dari mediabase $progress % $human_size_dst of $human_size_src with $human_progress_speed /s");
+				$size_before=$size_dst;
 				lanjut:
 				ftp_close($session_fxp_dst_cek);
 				$j++;
