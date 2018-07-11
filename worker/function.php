@@ -43,16 +43,17 @@ function MSToTotalFrame($timecode)
 	return $total;
 }
 //for loging and display
+require "setting.php";
 function Write2Log($message)
 {
-    $logfile="worker.log";
+    global $logfile;
     $jam=date("Y-m-d H:i:s");
 	file_put_contents($logfile,"$jam - $message\r\n",FILE_APPEND | LOCK_EX);
 	echo"$jam - $message\n";
 }
 function Write2LogSql($WorkerID,$MySqlResource,$message)
 {
-    $logfile="worker.log";
+    global $logfile;
     $jam=date("Y-m-d H:i:s");
 	file_put_contents($logfile,"$jam - $message\r\n",FILE_APPEND | LOCK_EX);
 	mysql_query("CALL INSERT_WORKER_LOG('$WorkerID','$message');",$MySqlResource);

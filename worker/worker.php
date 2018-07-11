@@ -355,7 +355,8 @@ while(42)
 	}
 	else
 	{
-		echo"Tidak ada job\n";
+		$jam=date("Y-m-d H:i:s");
+		echo"$jam - Tidak ada job\n";
 	}
 	selesai:
 	
@@ -366,7 +367,7 @@ while(42)
 	    {
 	        if(file_exists("$logfile.$i"))
 	        {
-	            unlink("$logfile.$i");
+	            if($i==$maxlogfile)unlink("$logfile.$i");
 	            $old=$i-1;
 	            rename("$logfile.$old","$logfile.$i");
 	        }
