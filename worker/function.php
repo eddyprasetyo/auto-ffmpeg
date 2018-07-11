@@ -46,7 +46,7 @@ function MSToTotalFrame($timecode)
 function Write2Log($message)
 {
     $logfile="worker.log";
-    $jam=date("H:i:s");
+    $jam=date("Y-m-d H:i:s");
 	file_put_contents($logfile,"$jam - $message\r\n",FILE_APPEND | LOCK_EX);
 	echo"$jam - $message\n";
 }
