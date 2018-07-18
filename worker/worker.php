@@ -365,12 +365,8 @@ while(42)
 	{
 	    for($i=$maxlogfile;$i>1;$i--)
 	    {
-	        if(file_exists("$logfile.$i"))
-	        {
-	            if($i==$maxlogfile)unlink("$logfile.$i");
-	            $old=$i-1;
-	            rename("$logfile.$old","$logfile.$i");
-	        }
+	        $old=$i-1;
+			if(file_exists("$logfile.$old"))rename("$logfile.$old","$logfile.$i");
 	    }
 	    rename($logfile,"$logfile.1");
 	    touch($logfile);
