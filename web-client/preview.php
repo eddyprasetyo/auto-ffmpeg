@@ -1,5 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Youtube & OTT Transcoder</title>
+<meta charset="utf-8">
+<script src="segmen.js"></script>
+<!--[if lt IE 9]>
+<script src="html5.js">
+</script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="css.css">
+<body>
+<header>
+<h1>Youtube & OTT Transcoder</h1>
+</header>
 <?php
-include "header.php";
 include "menu.php";
 ?>
 <section>
@@ -30,6 +43,12 @@ if(!mssql_num_rows($kueri))
 	goto end2;
 }
 mssql_free_result($kueri);
+if(!file_exists("LowRes/$clip.mp4")){
+  echo"Clip tidak ada file lowres nya<br>";
+	goto end2;
+}
+
+/*
 $kueri2=mssql_query("select ID from IMotion.dbo.MEDIA_INFORMATIONS
 where  DeviceAlias = 'ISI_LR_ONLINE'
 and ID = '$clip.mp4';");
@@ -39,15 +58,17 @@ if(!mssql_num_rows($kueri2))
 	goto end2;
 }
 mssql_free_result($kueri2);
+*/
 ?>
-<script src="segmen.js"></script>
+
 <div style="text-align:center">
-  <video id="video1" controls>
+  <video id="video1" ontimeupdate="onTimeUpdate(this)">
     <source src="./LowRes/<?php echo($clip);?>.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
   </video>
-  <h3><?php echo($clip);?></h3>
-<br>
+  <h3><?php echo($clip);?></h3> 
+    <p id="currentTimeCode" style="text-allign:center"></p> 
+  <br>
   <button title="go to start" onclick="tostart()">|<</button>
   <button title="mundur 1 menit" onclick="reserve60s()"><<<</button>
   <button title="mundur 10 detik" onclick="reserve10s()"><<</button>
