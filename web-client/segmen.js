@@ -12,6 +12,9 @@ var TableDataPot=[];
 window.onload = function(){
 	document.getElementById("buttontcin").disabled = false;
 }
+function onTimeUpdate(event){
+	document.getElementById("currentTimeCode").innerHTML = MstoTime(event.currentTime);
+}
 function tostart(){
 	var myVideo = document.getElementById("video1");
 	myVideo.pause();
@@ -181,6 +184,37 @@ function secondsToTime(secs){
 	if (minutes <10) minutes = "0"+minutes;
 	if (seconds <10) seconds = "0"+seconds;	
     return hours+":"+minutes+":"+seconds;
+}
+function MstoTime(currtime){
+    ms = Math.round(currtime*1000);
+    var hours = Math.floor(ms / (60 * 60 * 1000));
+    var divisor_for_minutes = ms % (60 * 60 * 1000);
+    var minutes = Math.floor(divisor_for_minutes / (60 * 1000));
+    var divisor_for_seconds = divisor_for_minutes % (60 * 1000);
+	var seconds = Math.floor(divisor_for_seconds / 1000);
+	var miliseconds = divisor_for_seconds % 1000;
+	if (hours <10) hours = "0"+hours;
+	if (minutes <10) minutes = "0"+minutes;
+	if (seconds <10) seconds = "0"+seconds;
+	if (miliseconds <100){
+		if (miliseconds < 10) miliseconds = "00"+miliseconds;
+		else miliseconds = "0"+miliseconds;
+	}	
+    return hours+":"+minutes+":"+seconds+"."+miliseconds;
+}
+function TimetoTimeinFrame(currtime){
+    ms = Math.round(currtime*25);
+    var hours = Math.floor(ms / (60 * 60 * 25));
+    var divisor_for_minutes = ms % (60 * 60 * 25);
+    var minutes = Math.floor(divisor_for_minutes / (60 * 25));
+    var divisor_for_seconds = divisor_for_minutes % (60 * 25);
+	var seconds = Math.floor(divisor_for_seconds / 25);
+	var frame = divisor_for_seconds % 25;
+	if (hours <10) hours = "0"+hours;
+	if (minutes <10) minutes = "0"+minutes;
+	if (seconds <10) seconds = "0"+seconds;
+	if (frame < 10) frame = "0"+frame;
+    return hours+":"+minutes+":"+seconds+"."+frame;
 }
 function kirim(){
 	document.form1.insegmentasimanual.value=TimecodeIn.toString();
