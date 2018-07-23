@@ -269,7 +269,7 @@ while(42)
 					{
 						$seg=$i+1;
 						unlink("$id_program-SEGMEN$seg.mp4");
-						if(!file_exists("$id_program-SEGMEN$seg.mp4"))Write2LogSql($WorkerID,$konek,"$id_program Sukses menghapus id_program-SEGMEN$seg.mp4");
+						if(!file_exists("$id_program-SEGMEN$seg.mp4"))Write2LogSql($WorkerID,$konek,"$id_program Sukses menghapus $id_program-SEGMEN$seg.mp4");
 						else Write2LogSql($WorkerID,$konek,"$id_program Gagal menghapus id_program-SEGMEN$seg.mp4");
 					}
 				}
