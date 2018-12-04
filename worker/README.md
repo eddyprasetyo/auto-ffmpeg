@@ -7,6 +7,6 @@ There's a lot of special case for step by step job here that's need to be genera
 Even though I use php as scripting language, I don't use object oriented style. It's just pure procedural programming
 
 Todo :
--generalise step into function
--push every optional parameters into database
--learn to use OOP style
+- generalise step into function
+- push every optional parameters into database
+- learn to use OOP style
