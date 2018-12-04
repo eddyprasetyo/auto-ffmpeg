@@ -1,11 +1,11 @@
 <?php
-$mysql_server="10.1.1.2";
-$mysql_user="youtube";
-$mysql_pass="Y0utub3netmedia";
+$mysql_server="xxx.xxx.xxx.xxx"; //ip of mysql server
+$mysql_user="UptoYou";
+$mysql_pass="UptoYou";
 $mysql_db="DB_YOUTUBE";
 
-$invenio_db_server = "invdbsql.nettv.co.id";
-$invenio_db_user = "liatdoang";
-$invenio_db_password = "L14tD04ng";
+$invenio_db_server = "xxx.xxx.xxx.xxx"; //ip of invenio server that hold segmentation data
+$invenio_db_user = "UptoYou";
+$invenio_db_password = "UptoYou";
 
 ?>
