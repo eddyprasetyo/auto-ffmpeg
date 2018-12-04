@@ -1,32 +1,32 @@
 <?php
-$WorkerID=3;
+$WorkerID=3; //each workstation assign different ID
 
 //source of ftp transfer
-$ftp_server_mediabase="172.16.113.20";
+$ftp_server_mediabase="xxx.xxx.xxx.xxx"; // ip of the source ftp server
 $ftp_user_mediabase="anonymous";
 $ftp_pass_mediabase="anonymous";
 
 
 //destination of ftp transfer
-$ftp_server_youtube="172.16.108.63";
-$ftp_user_youtube_rw="webdev";
-$ftp_pass_youtube_rw="W3bD3v";
-$ftp_user_youtube_ro="webdev";
-$ftp_pass_youtube_ro="W3bD3v";
+$ftp_server_youtube="xxx.xxx.xxx.xxx"; // ip of local ftp server
+$ftp_user_youtube_rw="UptoYou";
+$ftp_pass_youtube_rw="UptoYou";
+$ftp_user_youtube_ro="UptoYou";
+$ftp_pass_youtube_ro="UptoYou";
 
 //parameter ftp transfer
 $ftp_transfer_timeout=1800;//in second
 $dest_folder="";
 
-$ftp_server_segment="172.16.108.71";
-$ftp_user_segment="imotion";
-$ftp_pass_segment="IM0ti0n";
-$ftp_folder_segment="/ifs/data/Traffic";
+$ftp_server_segment="xxx.xxx.xxx.xxx"; //ip of server that hold segmentation data
+$ftp_user_segment="UptoYou";
+$ftp_pass_segment="UptoYou";
+$ftp_folder_segment="/ifs/data/Traffic";  //path that contain segmentation file
 $segmentation_file="segment.txt";
 
-$mysql_server="toa.nettv.co.id";
-$mysql_user="youtube";
-$mysql_pass="Y0utub3netmedia";
+$mysql_server="xxx.xxx.xxx.xxx"; //ip of mysql server
+$mysql_user="UptoYou";
+$mysql_pass="UptoYou";
 $mysql_db="DB_YOUTUBE";
 
 $binary_ffmpeg="C:\\ffmpeg\\ffmpeg.exe";
@@ -45,6 +45,6 @@ $ffmpeg_option_filter_logo = "-filter_complex overlay";
 
 //loging
 $logfile="worker.log";
-$Size2Rotate=1048576;
+$Size2Rotate=1048576; // about 1MB log file
 $maxlogfile=10;
 ?>
