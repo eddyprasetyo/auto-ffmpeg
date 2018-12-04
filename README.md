@@ -1,4 +1,5 @@
-# OTT Transcoder #
+# auto-ffmpeg #
+moved from private repository in bitbucket to github.
 
 This is remodeled for old transcoder back in 2015, where we need to transcode 1000 high res clip in just one week.
 
