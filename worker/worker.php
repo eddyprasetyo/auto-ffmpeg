@@ -225,7 +225,8 @@ while(42)
 				}
 				else
 				{
-				    $info=implode(" ".$ffmpeg_progress);
+				    if(file_exists($ffmpeg_progress_file))$info=implode(" ",$ffmpeg_progress);
+					else $info="progress file doesn't exist";
 				    mysql_query("CALL JOB_ERROR('$id_program','$id_job','Gagal Transcode Segmen$segmen[$i] - $info');",$konek);
 				    Write2LogSql($WorkerID,$konek,"$id_program Gagal Transcode Segmen$segmen[$i] - $info");
 				    goto selesai2;
@@ -305,7 +306,7 @@ while(42)
 			$totaldurfr=FrameToTotalFrame($durch);
 			
 			if(file_exists( $ffmpeg_progress_file))unlink( $ffmpeg_progress_file);
-			$command="$binary_ffmpeg -progress $ffmpeg_progress_file -i $id_program.MXF $ffmpeg_option_filter $ffmpeg_option_video $ffmpeg_option_audio -y $youtube_destination_folder\\$id_program.mp4";
+			$command="$binary_ffmpeg -progress $ffmpeg_progress_file -i \"$id_program.MXF\" $ffmpeg_option_filter $ffmpeg_option_video $ffmpeg_option_audio -y \"$youtube_destination_folder\\$id_program.mp4\"";
 			Write2LogSql($WorkerID,$konek,"$id_program kirim command $command");
 			pclose(popen("start /B $command >nul 2>&1", "r"));
 			Write2LogSql($WorkerID,$konek,"$id_program command terkirim");
