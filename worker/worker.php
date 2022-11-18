@@ -100,7 +100,8 @@ while(42)
 				$human_progress_speed=formatBytes($progress_speed);
 				$number_progress[$step]="$progress %";
 				mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
-				Write2LogSql($WorkerID,$konek,"$id_program transfer dari mediabase $progress % $human_size_dst of $human_size_src with $human_progress_speed /s");
+				$jam=date("Y-m-d H:i:s");
+				echo"\r$jam - $id_program transfer dari mediabase $progress % $human_size_dst of $human_size_src with $human_progress_speed /s";
 				$size_before=$size_dst;
 				lanjut:
 				ftp_close($session_fxp_dst_cek);
@@ -108,6 +109,7 @@ while(42)
 				if ($j>$ftp_transfer_timeout) goto outcheck;
 				$responmgx=substr(ftp_raw($session_fxp_src,"NOOP")[0],0,52);		
 			}
+			echo"\n";
 			ftp_close($session_fxp_src);
 			ftp_close($session_fxp_dst);
 			outcheck:
@@ -210,12 +212,14 @@ while(42)
 					preg_match("/frame=(\d+)\s/",$ffmpeg_progress[0],$frame);
 					$progress=round(100*(intval($frame[1]) / $durfr[$i]));
 					$number_progress[$step]="$progress %";
-					Write2LogSql($WorkerID,$konek,"$id_program Transcode Segmen $segmen[$i] dari $jumlahsegmen $number_progress[$step]");
+					$jam=date("Y-m-d H:i:s");
+					echo"\r$jam - $id_program Transcode Segmen $segmen[$i] dari $jumlahsegmen $number_progress[$step]";
 					mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
 					sleep(3);
 					$ffmpeg_progress=ReadLastLine($ffmpeg_progress_file,12);
 					preg_match("/continue/",$ffmpeg_progress[10],$cocok);
 				}
+				echo"\n";
 				$cocok=preg_grep("/end/",$ffmpeg_progress);
 				if($cocok)
 				{
@@ -254,12 +258,14 @@ while(42)
 					preg_match("/frame=(\d+)\s/",$ffmpeg_progress[0],$frame);
 					$progress=round(100*(intval($frame[1]) / $totaldurfr));
 					$number_progress[$step]="$progress %";
-					Write2LogSql($WorkerID,$konek,"$id_program Menggabungkan $jumlahsegmen Segmen $number_progress[$step]");
+					$jam=date("Y-m-d H:i:s");
+					echo"\r$jam - $id_program Menggabungkan $jumlahsegmen Segmen $number_progress[$step]";
 					mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
 					sleep(5);
 					$ffmpeg_progress=ReadLastLine($ffmpeg_progress_file,12);
 					preg_match("/continue/",$ffmpeg_progress[10],$cocok);				
 				}
+				echo"\n";
 				$cocok=preg_grep("/end/",$ffmpeg_progress);
 				if($cocok)
 				{
@@ -321,12 +327,14 @@ while(42)
 				preg_match("/frame=(\d+)\s/",$ffmpeg_progress[0],$frame);
 				$progress=round(100*(intval($frame[1]) / $totaldurfr));
 				$number_progress[$step]="$progress %";
-				Write2LogSql($WorkerID,$konek,"$id_program Transcode $number_progress[$step]");
+				$jam=date("Y-m-d H:i:s");
+				echo"\r$jam - $id_program Transcode $number_progress[$step]";
 				mysql_query("CALL INSERT_STEP_PROCESS('$id_job','$id_program','$progress_name[$step]','$number_progress[$step]');",$konek);
 				sleep(3);
 				$ffmpeg_progress=ReadLastLine($ffmpeg_progress_file,12);
 				preg_match("/continue/",$ffmpeg_progress[10],$cocok);
 			}
+			echo"\n";
 			$cocok=preg_grep("/end/",$ffmpeg_progress);
 			if($cocok)
 			{
@@ -357,7 +365,7 @@ while(42)
 	else
 	{
 		$jam=date("Y-m-d H:i:s");
-		echo"$jam - Tidak ada job\n";
+		echo"\r$jam - Tidak ada job";
 	}
 	selesai:
 	
